@@ -50,40 +50,37 @@ $fdisplay(file,"adress		data");
 endtask
 
 task main_phase(uvm_phase phase);
-  fork
-        
-        forever @( posedge fmem.clk or posedge fmem.rst_n)
+  fork   
+    forever @( posedge fmem.clk or posedge fmem.rst_n)
 	begin
-	calculate_clk_tp();
+		calculate_clk_tp();
 	end
-
-
-        forever @( posedge fmem.clk or posedge fmem.rst_n)
+	  
+    forever @( posedge fmem.clk or posedge fmem.rst_n)
 	begin
-	if(fmem.rst_n==1)
-	   begin
-		reset_mem();
-	   end
+		if(fmem.rst_n==1)
+	   	begin
+			reset_mem();
+	  	end
 	end   
 
-
-        forever @( negedge fmem.clk)
-        begin
-	if(fmem.cs_n==0)
-	   begin
+    forever @( negedge fmem.clk)
+    begin
+		if(fmem.cs_n==0)
+		begin
 	      	timing_check;
-	 	c.cmd_coverage.sample(i);
-           end
+	 		c.cmd_coverage.sample(i);
+        end
          fork
              rd_wr();
-	 join_none
+	 	join_none
 	end
 	      	   
-join_none
-  endtask
+  join_none
+endtask
 
 task shutdown_phase(uvm_phase phase);
-$fclose(file);
+	$fclose(file);
 endtask
 
 //---------------------------
@@ -100,22 +97,21 @@ endtask
 //============calculate_clk_time======//
 task calculate_clk_tp();
    while(posedge_count <2)
-      begin
+    begin
       @(posedge fmem.clk)
       	begin
-	if(posedge_count==0)
-        first_edge_time=$time;
+		if(posedge_count==0)
+       	 first_edge_time=$time;
 
-	else if(posedge_count ==1)
-	   begin
-	second_edge_time=$time;
-	$fdisplay(file,"adress		data");
-	$display($time,"firstedge =%d second edge=%d",first_edge_time,second_edge_time);
-	   end
-	posedge_count++;
+		else if(posedge_count ==1)
+	   	begin
+			second_edge_time=$time;
+			$fdisplay(file,"adress		data");
+			$display($time,"firstedge =%d second edge=%d",first_edge_time,second_edge_time);
+	   	end
+		posedge_count++;
       end
-  end
-
+   end
   clk_tp = (second_edge_time - first_edge_time);
 endtask  
 //===========resest mem===========//
