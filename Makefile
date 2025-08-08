@@ -12,8 +12,6 @@ COMPILE_LOGFILE ?=compile.log
 #USER_FILELIST ?=pkg_8b9b.sv
 SIMULATOR ?= QUESTA
 VLIB =  vlib work
-TRUECHIP_DPI=/tools/questa-/10.3e/questasim/uvm-1.1d/linux/uvm_dpi +acc 
-
 DUMP ?=0
 COVER ?=0
 SIM_DUMP = 
@@ -36,17 +34,14 @@ VSIM =  vsim \
         -do "coverage save -onexit name.ucdb;vcover report -html name.ucdb -htmldir  name_dir;run -all;quit" \
 	-c \
 
-vlib:
-	$(VLIB)
-
 comp: 
 	$(VLOG) \
 	$(TOPFILE)\
 
 run: 
-	$(VSIM)  -sv_lib $(TRUECHIP_DPI)
+	$(VSIM)
 
-all:	vlib comp run   
+all:  comp run   
 
 
 
