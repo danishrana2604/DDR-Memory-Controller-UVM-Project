@@ -22,8 +22,11 @@ always #5 clk = ~clk;
 
 
 ext_intf f(clk,rst_n);
-controller c(f);
-assertion a(c.fm);
+mem_intf fm(clk,rst_n);
+
+assertion a(fm);
+controller c(f,fm);
+new_memory mem(fm);
 
 initial begin
 rst_n=1;
