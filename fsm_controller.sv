@@ -38,7 +38,7 @@ assign fm.dq= (fm.r_w_enable) ? 32'bz : data;
 always @(posedge fc.clk or posedge fc.rst_n)
 begin
 	if( fc.rst_n==1)
-		   begin		   
+	begin		   
 		   q_cmd.delete;
 		   q_data.delete;
 		   q_addr.delete;
@@ -50,27 +50,27 @@ begin
 		   fm.ca=0;
 
 		   state=nop_state;
-		   end
+	end
 	if(fc.cmd_n==0)
-		begin
+	begin
  	   	q_cmd.push_back(fc.rd_wr);
  	   	q_addr.push_back(fc.addr_in);
- 	   		if(fc.rd_wr==0)
- 	   	        q_data.push_back(fc.data_in);
-		end		
+ 	   	if(fc.rd_wr==0)
+ 	   	    q_data.push_back(fc.data_in);
+	end		
 end
 
 
 initial @(posedge fc.clk)
 begin
-		      if(q_cmd.size > 0)
-		         begin
-		         cmd=q_cmd.pop_front;
-		         addr=q_addr.pop_front;
-			 state=activate;
-			 end
-		      else
-			 state=nop_state;
+	if(q_cmd.size > 0)
+	begin
+		cmd=q_cmd.pop_front;
+		addr=q_addr.pop_front;
+		state=activate;
+	end
+	else
+		state=nop_state;
 end		   
 
 
