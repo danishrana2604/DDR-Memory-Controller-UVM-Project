@@ -1,0 +1,6 @@
+0 NOP
+1 RD
+2 WR
+3 PRE
+4 ACT
+5 REF
