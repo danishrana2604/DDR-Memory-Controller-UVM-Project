@@ -41,13 +41,13 @@ end
 initial begin
 
 uvm_config_db #(virtual ext_intf)::set(null,"*","dut_intf",f);
-uvm_config_db #(virtual mem_intf)::set(null,"*","mem_intf",c.fm);
+uvm_config_db #(virtual mem_intf)::set(null,"*","mem_intf",fm);
 run_test("test");
 end
 initial
 begin
  $dumpfile("dump.vcd");
- $dumpvars(0,f,c.fm);
+ $dumpvars(0,f,fm);
 
 end
 endmodule
