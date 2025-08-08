@@ -17,10 +17,7 @@ logic local_data;
 bit refresh_enable;
 enum bit [2:0] {nop_state,read,write,precharge,activate,refresh} state;
 //control_state state;
-
-mem_intf fm(fc.clk,fc.rst_n);
-new_memory m(fm);
-
+	
 assign fm.cs_n = (fm.cmd==0)? 'b1: 'b0;
 assign fc.data_out_vld = (fm.r_w_enable==1 && fm.dq !== 32'bz)?'b1:'b0;
 assign fc.data_in_vld = (fm.r_w_enable==0 && fm.dq !== 32'bz)?'b1:'b0;
