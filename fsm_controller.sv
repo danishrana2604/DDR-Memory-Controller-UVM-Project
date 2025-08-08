@@ -1,5 +1,4 @@
-module controller (ext_intf fc);
-
+module controller (ext_intf fc, mem_intf fm);
 
 bit q_cmd[$];
 bit [15:0] q_addr[$];
